@@ -2,9 +2,7 @@
 
 namespace Otg\Ean\Result;
 
-use GuzzleHttp\Command\Model;
-
-class RoomAvailabilityResult extends Model
+class RoomAvailabilityResult extends Result
 {
     /**
      * Returns the Room element matching the roomTypeCode and rateCode

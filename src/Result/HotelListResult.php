@@ -2,9 +2,9 @@
 
 namespace Otg\Ean\Result;
 
-use GuzzleHttp\Command\Model;
+use GuzzleHttp\HasDataTrait;
 
-class HotelListResult extends Model
+class HotelListResult extends Result
 {
     protected $idIndex = array();
 

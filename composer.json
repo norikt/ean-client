@@ -3,8 +3,9 @@
     "description": "Client for consuming the EAN Hotel API, based on Guzzle",
     "require": {
         "php": ">=5.4",
-        "guzzlehttp/guzzle-services": "0.3.*",
-        "guzzlehttp/command": "0.6.*"
+        "guzzlehttp/guzzle": "~5.0",
+        "guzzlehttp/guzzle-services": "0.4.*",
+        "guzzlehttp/command": "0.7.*"
     },
     "require-dev": {
         "guzzlehttp/log-subscriber": "~1.0"

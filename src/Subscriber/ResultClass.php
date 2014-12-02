@@ -27,14 +27,12 @@ class ResultClass implements SubscriberInterface
 
     public function onProcess(ProcessEvent $event)
     {
-        // Model results are created by
-        // GuzzleHttp\Command\Guzzle\Subscriber\ProcessResponse::onProcess()
-        $result = $event->getResult();
-        if (get_class($result) !== 'GuzzleHttp\Command\Model') {
-            return;
-        }
+        $command = $event->getCommand();
+        $description = $event->getTransaction()->serviceClient->getDescription();
+        $operation = $description->getOperation($command->getName());
 
-        $operation = $event->getCommand()->getOperation();
+
+//        $operation = $event->getCommand()->getOperation();
         if (!($modelName = $operation->getResponseModel())) {
             return;
         }
@@ -49,7 +47,7 @@ class ResultClass implements SubscriberInterface
             return;
         }
 
-        $event->setResult(new $modelClass($result->toArray()));
+        $event->setResult(new $modelClass($event->getResult()));
     }
 
 }

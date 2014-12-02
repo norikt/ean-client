@@ -9,6 +9,7 @@ use Otg\Ean\RequestLocation\XmlQueryLocation;
 use Otg\Ean\Subscriber\EanError;
 use Otg\Ean\Subscriber\ResultClass;
 use Otg\Ean\Subscriber\ContentLength;
+use GuzzleHttp\Command\Guzzle\Serializer;
 
 /**
  * HotelClient object for executing commands against the EAN Hotel API
@@ -29,10 +30,9 @@ class HotelClient extends GuzzleClient
      */
     public static function factory($config = array())
     {
+        $description = new Description(include(__DIR__ . '/Resources/hotel-xml-v3.php'));
         $defaults = array(
-            'request_locations' => array(
-                'xml.query' => new XmlQueryLocation('xml.query')
-            ),
+            'serializer' => new Serializer($description, array('xml.query' => new XmlQueryLocation('xml.query'))),
             'defaults' => array(
                 'booking_endpoint' => 'https://book.api.ean.com',
                 'general_endpoint' => 'http://api.ean.com',
@@ -47,7 +47,7 @@ class HotelClient extends GuzzleClient
         $config['defaults'] += $defaults['defaults'];
 
         $httpClient = new HttpClient();
-        $description = new Description(include(__DIR__ . '/Resources/hotel-xml-v3.php'));
+//        $description = new Description(include(__DIR__ . '/Resources/hotel-xml-v3.php'));
 
         $client = new self($httpClient, $description, $config);
         $client->getEmitter()->attach(new ResultClass());
@@ -55,5 +55,7 @@ class HotelClient extends GuzzleClient
         $client->getEmitter()->attach(new ContentLength());
 
         return $client;
+
+
     }
 }
