@@ -27,12 +27,9 @@ class ResultClass implements SubscriberInterface
 
     public function onProcess(ProcessEvent $event)
     {
-        $command = $event->getCommand();
         $description = $event->getTransaction()->serviceClient->getDescription();
-        $operation = $description->getOperation($command->getName());
+        $operation = $description->getOperation($event->getCommand()->getName());
 
-
-//        $operation = $event->getCommand()->getOperation();
         if (!($modelName = $operation->getResponseModel())) {
             return;
         }
